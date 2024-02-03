@@ -1,0 +1,38 @@
+* {
+    box-sizing: border-box;
+}
+
+.buttons-container {
+    margin: 40px;
+    display: flex;
+    gap: 30px;
+}
+
+.buttons{
+    flex: 1;
+    display: flex;
+    border: solid;
+    border-width: 4px;
+    border-radius: 20px;
+    background-color: aqua;
+}
+
+button {
+    flex: 1;
+    font-size: 40px;
+    padding: 15px;
+    margin: 5px;
+    
+}
+
+.output {
+    background-color: skyblue;
+}
+
+.player-wins-container, .computer-wins-container, #statementOfMatch, .winner {
+    font-size: 25px;
+}
+
+.winner {
+    font-size: 35px;
+}

@@ -4,10 +4,46 @@ function getComputerChoice(){
     return choice;
 }
 
-function getPlayerChoice(){
-    let choice = prompt("Enter your choice (Rock/Paper/Scissors): ");
+function getPlayerChoice(e){
+    let choice = e.target.textContent;
     choice = choice.toLowerCase();
+    // console.log(choice);
     return choice;
+}
+
+function getBothChoicesAndPlayRound(e){
+    let computerChoice = getComputerChoice();
+    let playerChoice = getPlayerChoice(e);
+
+    // console.log(computerChoice);
+    // console.log(playerChoice);
+    
+    let statement = playRound(computerChoice, playerChoice);
+
+    
+    if (statement === "re-round" || statement === "tie"){
+        statementOfRound.textContent = "PLAY AGAIN!";
+    }
+    else{
+        statementOfRound.textContent = statement;
+        playerWins.textContent = playerWinsCount;
+        computerWins.textContent = computerWinsCount;
+    }
+
+    if (playerWinsCount == 5){
+        var winner = document.querySelector(".winner");
+        // winner.textContent = "You Won!";
+        playerWinsCount = 0;
+        computerWinsCount = 0;
+        alert("You Won!");
+    }
+    else if (computerWinsCount == 5){
+        var winner = document.querySelector(".winner");
+        // winner.textContent = "You Lose!";
+        playerWinsCount = 0;
+        computerWinsCount = 0;
+        alert("You Lost!");
+    }
 }
 
 function playRound(playerChoice, computerChoice){
@@ -19,64 +55,50 @@ function playRound(playerChoice, computerChoice){
     }
     else if (playerChoice === "rock"){
         if (computerChoice === "paper"){
+            computerWinsCount++;
             return ("You Lose! Paper beats Rock.");
         }
         else {
-            wins++;
+            playerWinsCount++;
             return ("You Win! Rock beats Scissors.");
         }
     }
     else if (playerChoice === "paper"){
         if (computerChoice === "rock"){
-            wins++;
+            playerWinsCount++;
             return ("You Win! Paper beats Rock.");
         }
         else {
+            computerWinsCount++;
             return ("You Lose! Rock beats Scissors.");
         }
     }
     else {
         if (computerChoice === "rock"){
+            computerWinsCount++;
             return ("You Lose! Rock beats Scissors.");
         }
         else {
-            wins++;
+            playerWinsCount++;
             return ("You Win! Paper beats Rock.");
         }
     }
 }
 
-function game(){
-    let counter = 0;
-    while (counter != 5){
-        let playerChoice = getPlayerChoice();
-        let computerChoice = getComputerChoice();
-        // console.log("Your Choice: ", playerChoice);
-        // console.log("Computer CHoice: ", computerChoice);
-        let message = playRound(playerChoice, computerChoice);
-        if (message !== "tie" && message !== "re-round"){
-            console.log(message);
-            counter++;
-        }
-        else {
-            if (message === "tie"){
-                console.log("Game Tied! Play this round again (Round: ",counter+1,")");
-            }
-            else {
-                console.log("Enter a valid Choice! Play this round again (Round: ",counter+1,")");
-            }
-        }
-        
-    }
-    console.log(counter);
-    console.log(wins);
-    if (counter-wins > wins){
-        console.log("You Lost!");
-    }
-    else {
-        console.log("You Win!");
-    }
-}
+let playerWinsCount = 0;
+let computerWinsCount = 0;
 
-let wins = 0;
-game();
+var rockBtn = document.querySelector("#rock");
+var paperBtn = document.querySelector("#paper");
+var scissorBtn = document.querySelector("#scissors");
+
+let statementOfRound = document.querySelector("#statementOfMatch");
+let playerWins = document.querySelector("#player-wins");
+let computerWins = document.querySelector("#computer-wins");
+
+playerWins.textContent = playerWinsCount;
+computerWins.textContent = computerWinsCount;
+
+rockBtn.addEventListener("click", getBothChoicesAndPlayRound);
+paperBtn.addEventListener("click", getBothChoicesAndPlayRound);
+scissorBtn.addEventListener("click", getBothChoicesAndPlayRound);
